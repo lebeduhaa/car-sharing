@@ -14,7 +14,7 @@ const runSchema = new Schema({
     type: Number,
     required: [true, 'Start fuel level is required!'],
     max: [100, 'Fuel level cannot be more than 100!'],
-    min: [100, 'Fuel level cannot be less than 100!']
+    min: [0, 'Fuel level cannot be less than 100!']
   },
   startMilage: {
     type: Number,
