@@ -1,3 +1,3 @@
 module.exports = {
-  car: require('./car')
-}
+    car: require('./car')
+};
