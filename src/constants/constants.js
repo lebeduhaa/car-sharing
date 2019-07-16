@@ -1,5 +1,5 @@
 module.exports = {
-  endpoints: {
-    root: '/'
-  }
+    endpoints: {
+        root: '/'
+    }
 };
