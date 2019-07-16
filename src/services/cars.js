@@ -60,7 +60,78 @@ class CarsService {
 
   static getReserved() {
     return new Promise((resolve, reject) => {
+      Car.find(
+        {status: 'Reserved', 'currentRun.driver.creditCard': null},
+        {
+          _id: true,
+          location: true,
+          'currentRun.driver.firstName': true,
+          'currentRun.driver.lastName': true,
+          'currentRun.driver.licenseNumber': true
+        },
+        (error, result) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(result);
+          }
+        }
+      );
+    });
+  }
 
+  static putInService() {
+    return new Promise((resolve, reject) => {
+      Car.updateMany(
+        {
+          $or: [
+            {'productionInfo.date': {$lt: new Date('2017-01-01')}},
+            {mileage: {$gte: 100000}}
+          ]
+        },
+        {status: 'In Service'},
+        (error, result) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(result);
+          }
+        }
+      );
+    });
+  }
+
+  static putBookedLocation() {
+    return new Promise((resolve, reject) => {
+      Car.updateMany(
+        {
+          $and: [
+            {bookingsHistory: {$gte: {$size: 2}}},
+            {status: {$ne: 'Reserved'}},
+            {status: {$ne: 'In use'}}
+          ]
+        },
+        {location: [53.8882836, 27.5442615]},
+        (error, result) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(result);
+          }
+        }
+      )
+    });
+  }
+
+  static delete(id) {
+    return new Promise((resolve, reject) => {
+      Car.remove({_id: id}, (error, result) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(result);
+        }
+      });
     });
   }
 

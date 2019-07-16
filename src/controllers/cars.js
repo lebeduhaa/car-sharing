@@ -48,6 +48,40 @@ class CarsController {
     }
   }
 
+  static async getReservedCars(request, response, next) {
+    try {
+      response.send(await CarsService.getReserved());
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async putCarsInService(request, response, next) {
+    try {
+      response.send(await CarsService.putInService());
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async putBookedCarsLocation(request, response, next) {
+    try {
+      response.send(await CarsService.putBookedLocation());
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async deleteCar(request, response, next) {
+    try {
+      const {id} = request.params;
+
+      response.send(await CarsService.delete(id));
+    } catch (error) {
+      next(error);
+    }
+  }
+
 }
 
 module.exports = CarsController;
