@@ -1,4 +1,5 @@
 const Car = require('../models/car');
+const Error = require('../classes/error');
 
 class CarsService {
   
@@ -6,7 +7,7 @@ class CarsService {
     return new Promise((resolve, reject) => {
       Car.find({}, (error, cars) => {
         if (error) {
-          reject(error);
+          reject(new Error(error.message, 500));
         } else {
           resolve(cars);
         }
@@ -18,9 +19,13 @@ class CarsService {
     return new Promise((resolve, reject) => {
       Car.findById(id, (error, car) => {
         if (error) {
-          reject(error)
+          reject(new Error(error.message, 500))
         } else {
-          resolve(car);
+          if (car) {
+            resolve(car);
+          } else {
+            reject(new Error('Car does not exist!', 404));
+          }
         }
       });
     })
@@ -30,7 +35,7 @@ class CarsService {
     return new Promise((resolve, reject) => {
       Car.create(car)
         .then(result => resolve(result))
-        .catch(error => reject(error));
+        .catch(error => reject(new Error(error.message, 500)));
     });
   }
 
@@ -38,7 +43,7 @@ class CarsService {
     return new Promise((resolve, reject) => {
       Car.findByIdAndUpdate(car._id, car, {new: true}, (err, result) => {
         if (err) {
-          reject(err);
+          reject(new Error(error.message, 500))
         } else {
           resolve(result);
         }
@@ -50,7 +55,7 @@ class CarsService {
     return new Promise((resolve, reject) => {
       Car.find({status: 'In use', fuelLevel: {$lt: 80}}, (err, result) => {
         if (err) {
-          reject(err);
+          reject(new Error(error.message, 500))
         } else {
           resolve(result);
         }
@@ -92,7 +97,7 @@ class CarsService {
         {status: 'In Service'},
         (error, result) => {
           if (error) {
-            reject(error);
+            reject(new Error(error.message, 500));
           } else {
             resolve(result);
           }
@@ -114,7 +119,7 @@ class CarsService {
         {location: [53.8882836, 27.5442615]},
         (error, result) => {
           if (error) {
-            reject(error);
+            reject(new Error(error.message, 500));
           } else {
             resolve(result);
           }
@@ -125,11 +130,15 @@ class CarsService {
 
   static delete(id) {
     return new Promise((resolve, reject) => {
-      Car.remove({_id: id}, (error, result) => {
+      Car.deleteOne({_id: id}, (error, result) => {
         if (error) {
           reject(error);
         } else {
-          resolve(result);
+          if (result.deletedCount) {
+            resolve(result);
+          } else {
+            reject(Error('Car does not exist!'));
+          }
         }
       });
     });

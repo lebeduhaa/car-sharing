@@ -1,3 +1,8 @@
+const errorHandler = require('../middlewares/error-handler');
+const notFound = require('../middlewares/not-found');
+
 module.exports = expressApp => {
-  console.log('middlewares were initialized!');  
+  expressApp
+    .use(errorHandler)
+    .use(notFound);
 }
