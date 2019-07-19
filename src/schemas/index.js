@@ -1,3 +1,7 @@
 module.exports = {
-    car: require('./car')
+    car: require('./car'),
+    statusFuel: require('./status-fuel'),
+    statusCard: require('./status-card'),
+    putStatus: require('./put-status'),
+    location: require('./location')
 };

@@ -39,33 +39,41 @@ class CarsController {
         }
     }
 
-    static async getCarsInUse(request, response, next) {
+    static async getCarsByStatusAndFuel(request, response, next) {
         try {
-            response.send(await CarsService.getInUse());
+            const { status, fuel } = request.query;
+
+            response.send(await CarsService.getByStatusAndFuel(status, fuel));
         } catch (error) {
             next(error);
         }
     }
 
-    static async getReservedCars(request, response, next) {
+    static async getCarsByStatusAndCard(request, response, next) {
         try {
-            response.send(await CarsService.getReserved());
+            const { status, card } = request.query;
+
+            response.send(await CarsService.getByStatusAndCard(status, card));
         } catch (error) {
             next(error);
         }
     }
 
-    static async putCarsInService(request, response, next) {
+    static async putCarsStatus(request, response, next) {
         try {
-            response.send(await CarsService.putInService());
+            const { date, mileage, status } = request.query;
+
+            response.send(await CarsService.putStatus(date, mileage, status));
         } catch (error) {
             next(error);
         }
     }
 
-    static async putBookedCarsLocation(request, response, next) {
+    static async putCarsLocation(request, response, next) {
         try {
-            response.send(await CarsService.putBookedLocation());
+            const { latitude, longitude } = request.query;
+
+            response.send(await CarsService.putBookedLocation(latitude, longitude));
         } catch (error) {
             next(error);
         }

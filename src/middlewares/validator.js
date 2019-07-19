@@ -1,7 +1,7 @@
 const Joi = require('joi');
 
-module.exports = schema => (request, response, next) => {
-    const validationResult = Joi.validate(request.body, schema);
+module.exports = schema => (object, request, response, next) => {
+    const validationResult = Joi.validate(object, schema);
 
     if (validationResult.error) {
         response

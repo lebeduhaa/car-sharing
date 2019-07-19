@@ -22,7 +22,7 @@ module.exports = Joi
         },
         status: Joi
             .string()
-            .valid('In use', 'Free', 'Unavailable', 'In Service')
+            .valid('In use', 'Free', 'Unavailable', 'In Service', 'Reserved')
             .required(),
         fuelLevel: Joi
             .number()

@@ -49,9 +49,9 @@ class CarsService {
         });
     }
 
-    static getInUse() {
+    static getByStatusAndFuel(status, fuel) {
         return new Promise((resolve, reject) => {
-            Car.find({ status: 'In use', fuelLevel: { $lt: 80 } }, (error, result) => {
+            Car.find({ status, fuelLevel: { $lt: Number(fuel) } }, (error, result) => {
                 if (error) {
                     reject(new Error(error.message, 500));
                 } else {
@@ -61,10 +61,10 @@ class CarsService {
         });
     }
 
-    static getReserved() {
+    static getByStatusAndCard(status, card) {
         return new Promise((resolve, reject) => {
             Car.find(
-                { status: 'Reserved', 'currentRun.driver.creditCard': null },
+                { status, 'currentRun.driver.creditCard': card === 'true' ? {$ne: null} : null },
                 {
                     _id: true,
                     location: true,
@@ -83,16 +83,16 @@ class CarsService {
         });
     }
 
-    static putInService() {
+    static putStatus(date, mileage, status) {
         return new Promise((resolve, reject) => {
             Car.updateMany(
                 {
                     $or: [
-                        { 'productionInfo.date': { $lt: new Date('2017-01-01') } },
-                        { mileage: { $gte: 100000 } }
+                        { 'productionInfo.date': { $lt: new Date(date) } },
+                        { mileage: { $gte: Number(mileage) } }
                     ]
                 },
-                { status: 'In Service' },
+                { status: status },
                 (error, result) => {
                     if (error) {
                         reject(new Error(error.message, 500));
@@ -104,7 +104,7 @@ class CarsService {
         });
     }
 
-    static putBookedLocation() {
+    static putBookedLocation(latitude, longitude) {
         return new Promise((resolve, reject) => {
             Car.updateMany(
                 {
@@ -114,7 +114,7 @@ class CarsService {
                         { status: { $ne: 'In use' } }
                     ]
                 },
-                { location: [53.8882836, 27.5442615] },
+                { location: [Number(latitude), Number(longitude)] },
                 (error, result) => {
                     if (error) {
                         reject(new Error(error.message, 500));
