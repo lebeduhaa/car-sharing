@@ -5,5 +5,6 @@ module.exports = {
     putStatus: require('./put-status'),
     location: require('./location'),
     delete: require('./delete'),
-    id: require('./id')
+    id: require('./id'),
+    pagination: require('./pagination')
 };

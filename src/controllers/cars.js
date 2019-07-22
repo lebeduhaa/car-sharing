@@ -2,10 +2,12 @@ const CarsService = require('../services/cars');
 
 class CarsController {
     static async getCars(request, response) {
-        response.send(await CarsService.getAll());
+        const { page, size } = request.query;
+
+        response.send(await CarsService.getAll(page, size));
     }
 
-    static async getCar(request, response, next) {
+    static async getCar(request, response) {
         const { id } = request.params;
 
         response.send(await CarsService.getById(id));

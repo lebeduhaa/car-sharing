@@ -1,41 +1,48 @@
-const CustomError = require('../classes/error');
 const CarRepository = require('../repositories/car');
 
 class CarsService {
-    static async getAll() {
-        return await CarRepository.getAll();
+    static hand(callback) {
+        return new Promise((resolve, reject) => {
+            callback
+                .then(result => resolve(result))
+                .catch(err => reject(err));
+        });
     }
 
-    static getById(id) {
-        return await CarRepository.getById();
+    static async getAll(page, size) {
+        return await CarRepository.getAll(page, size);
     }
 
-    static create(car) {
-        return await CarRepository.create();
+    static async getById(id) {
+        return await CarRepository.getById(id);
     }
 
-    static updateCar(car) {
-        return await CarRepository.update();
+    static async create(car) {
+        return await CarRepository.create(car);
     }
 
-    static getByStatusAndFuel(status, fuel) {
+    static async updateCar(car) {
+        return await CarRepository.update(car);
+    }
+
+    static async getByStatusAndFuel(status, fuel) {
         return await CarRepository.getByStatusAndFuel(status, fuel);
     }
 
-    static getByStatusAndCard(status, card) {
+    static async getByStatusAndCard(status, card) {
         return await CarRepository.getByStatusAndCard(status, card);
     }
 
-    static putStatus(date, mileage, status) {
+    static async putStatus(date, mileage, status) {
        return await CarRepository.putStatus(date, mileage, status);
     }
 
-    static putBookedLocation(latitude, longitude) {
+    static async putBookedLocation(latitude, longitude) {
         return await CarRepository.putBookedLocation(latitude, longitude);
     }
 
-    static delete(vin) {
-        return await CarRepository.delete(vin);
+    static async delete(vin) {
+        return await this.hand(CarRepository.delete(vin));
     }
 }
 

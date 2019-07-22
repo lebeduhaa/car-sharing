@@ -1,7 +1,7 @@
 module.exports = callback => {
-  return (request, response, next) => {
+  return async (request, response, next) => {
     try {
-      callback(request, response, next);
+      await callback(request, response, next);
     } catch (exception) {
       next(exception);
     }

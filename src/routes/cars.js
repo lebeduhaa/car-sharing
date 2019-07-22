@@ -5,59 +5,59 @@ const schemas = require('../validation-schemas');
 const bodyValidator = require('../middlewares/body-validator');
 const queryValidator = require('../middlewares/query-validator');
 const paramsValidator = require('../middlewares/params-validator');
-const tryCatch = require('../middlewares/try-catch');
+const requestWrapper = require('../middlewares/request-wrapper');
 
 router.get(
   '/status-fuel',
   queryValidator, 
   validator(schemas.statusFuel), 
-  tryCatch(CarsController.getCarsByStatusAndFuel)
+  requestWrapper(CarsController.getCarsByStatusAndFuel)
 );
 router.get(
   '/status-card',
   queryValidator,
   validator(schemas.statusCard),
-  tryCatch(CarsController.getCarsByStatusAndCard)  
+  requestWrapper(CarsController.getCarsByStatusAndCard)  
 );
 router.get(
   '/:id',
   paramsValidator,
   validator(schemas.id),
-  tryCatch(CarsController.getCar)
+  requestWrapper(CarsController.getCar)
 );
 router.get(
   '/',
-  tryCatch(CarsController.getCars)
+  requestWrapper(CarsController.getCars)
 );
 router.post(
   '/',
   bodyValidator,
   validator(schemas.car),
-  tryCatch(CarsController.postCar)
+  requestWrapper(CarsController.postCar)
 );
 router.put(
   '/status',
   bodyValidator,
   validator(schemas.putStatus),
-  tryCatch(CarsController.putCarsStatus)
+  requestWrapper(CarsController.putCarsStatus)
 );
 router.put(
   '/location',
   bodyValidator,
   validator(schemas.location),
-  tryCatch(CarsController.putCarsLocation)  
+  requestWrapper(CarsController.putCarsLocation)  
 );
 router.put(
   '/',
   bodyValidator,
   validator(schemas.car),
-  tryCatch(CarsController.putCar)
+  requestWrapper(CarsController.putCar)
 );
 router.delete(
   '/:vin',
   paramsValidator,
   validator(schemas.delete),
-  tryCatch(CarsController.deleteCar)
+  requestWrapper(CarsController.deleteCar)
 );
 
 module.exports = router;

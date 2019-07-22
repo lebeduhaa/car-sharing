@@ -1,7 +1,8 @@
 const Car = require('../models/car');
+const CustomError = require('../classes/error');
 
 class CarRepository {
-  static getAll() {
+  static getAll(page, size) {
     return new Promise((resolve, reject) => {
       Car.find({}, (error, cars) => {
           if (error) {
@@ -9,11 +10,11 @@ class CarRepository {
           } else {
               resolve(cars);
           }
-      });
+      }).limit(Number(size)).skip(Number(size*(page - 1)));
     });
   }
 
-  static getById() {
+  static getById(id) {
     return new Promise((resolve, reject) => {
       Car.findById(id, (error, car) => {
           if (error) {
@@ -28,7 +29,7 @@ class CarRepository {
     });
   }
 
-  static create() {
+  static create(car) {
     return new Promise((resolve, reject) => {
       Car.create(car)
           .then(result => resolve(result))
@@ -36,7 +37,7 @@ class CarRepository {
     });
   }
 
-  static update() {
+  static update(car) {
     return new Promise((resolve, reject) => {
       Car.findByIdAndUpdate(car._id, car, { new: true }, (error, result) => {
           if (error) {
