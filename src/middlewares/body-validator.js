@@ -1,3 +1,3 @@
 module.exports = (request, response, next) => {
-  next(request.body);
-}
+    next(request.body);
+};

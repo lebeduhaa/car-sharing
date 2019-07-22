@@ -8,8 +8,8 @@ module.exports = Joi
             .valid('In use', 'Free', 'Unavailable', 'In Service', 'Reserved')
             .required(),
         fuel: Joi
-          .number()
-          .min(0)
-          .max(100)
-          .required()
+            .number()
+            .min(0)
+            .max(100)
+            .required()
     });

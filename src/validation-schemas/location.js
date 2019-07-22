@@ -4,9 +4,9 @@ module.exports = Joi
     .object()
     .keys({
         latitude: Joi
-          .number()
-          .required(),
+            .number()
+            .required(),
         longitude: Joi
-          .number()
-          .required()
+            .number()
+            .required()
     });

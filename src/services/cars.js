@@ -1,14 +1,6 @@
 const CarRepository = require('../repositories/car');
 
 class CarsService {
-    static hand(callback) {
-        return new Promise((resolve, reject) => {
-            callback
-                .then(result => resolve(result))
-                .catch(err => reject(err));
-        });
-    }
-
     static async getAll(page, size) {
         return await CarRepository.getAll(page, size);
     }
@@ -34,7 +26,7 @@ class CarsService {
     }
 
     static async putStatus(date, mileage, status) {
-       return await CarRepository.putStatus(date, mileage, status);
+        return await CarRepository.putStatus(date, mileage, status);
     }
 
     static async putBookedLocation(latitude, longitude) {
@@ -42,7 +34,7 @@ class CarsService {
     }
 
     static async delete(vin) {
-        return await this.hand(CarRepository.delete(vin));
+        return await CarRepository.delete(vin);
     }
 }
 

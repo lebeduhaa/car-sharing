@@ -8,6 +8,6 @@ module.exports = Joi
             .valid('In use', 'Free', 'Unavailable', 'In Service', 'Reserved')
             .required(),
         card: Joi
-          .boolean()
-          .required()
+            .boolean()
+            .required()
     });

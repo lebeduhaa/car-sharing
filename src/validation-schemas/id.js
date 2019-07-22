@@ -4,6 +4,6 @@ module.exports = Joi
     .object()
     .keys({
         id: Joi
-          .number()
-          .required()
+            .number()
+            .required()
     });
