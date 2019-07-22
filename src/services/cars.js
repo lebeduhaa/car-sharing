@@ -1,12 +1,12 @@
 const Car = require('../models/car');
-const Error = require('../classes/error');
+const CustomError = require('../classes/error');
 
 class CarsService {
     static getAll() {
         return new Promise((resolve, reject) => {
             Car.find({}, (error, cars) => {
                 if (error) {
-                    reject(new Error(error.message, 500));
+                    reject(new CustomError(error.message, 500));
                 } else {
                     resolve(cars);
                 }
@@ -18,12 +18,12 @@ class CarsService {
         return new Promise((resolve, reject) => {
             Car.findById(id, (error, car) => {
                 if (error) {
-                    reject(new Error(error.message, 500));
+                    reject(new CustomError(error.message, 500));
                 } else
                 if (car) {
                     resolve(car);
                 } else {
-                    reject(new Error('Car does not exist!', 404));
+                    reject(new CustomError('Car does not exist!', 404));
                 }
             });
         });
@@ -33,7 +33,7 @@ class CarsService {
         return new Promise((resolve, reject) => {
             Car.create(car)
                 .then(result => resolve(result))
-                .catch(error => reject(new Error(error.message, 500)));
+                .catch(error => reject(new CustomError(error.message, 500)));
         });
     }
 
@@ -41,7 +41,7 @@ class CarsService {
         return new Promise((resolve, reject) => {
             Car.findByIdAndUpdate(car._id, car, { new: true }, (error, result) => {
                 if (error) {
-                    reject(new Error(error.message, 500));
+                    reject(new CustomError(error.message, 500));
                 } else {
                     resolve(result);
                 }
@@ -53,7 +53,7 @@ class CarsService {
         return new Promise((resolve, reject) => {
             Car.find({ status, fuelLevel: { $lt: Number(fuel) } }, (error, result) => {
                 if (error) {
-                    reject(new Error(error.message, 500));
+                    reject(new CustomError(error.message, 500));
                 } else {
                     resolve(result);
                 }
@@ -95,7 +95,7 @@ class CarsService {
                 { status: status },
                 (error, result) => {
                     if (error) {
-                        reject(new Error(error.message, 500));
+                        reject(new CustomError(error.message, 500));
                     } else {
                         resolve(result);
                     }
@@ -117,7 +117,7 @@ class CarsService {
                 { location: [Number(latitude), Number(longitude)] },
                 (error, result) => {
                     if (error) {
-                        reject(new Error(error.message, 500));
+                        reject(new CustomError(error.message, 500));
                     } else {
                         resolve(result);
                     }

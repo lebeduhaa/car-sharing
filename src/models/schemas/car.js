@@ -3,6 +3,11 @@ const productionInfo = require('./production-info');
 const runSchema = require('./run');
 
 const carSchema = new Schema({
+    vin: {
+        type: Number,
+        required: [true, 'VIN is required!'],
+        unique: [true, 'VIN is unique attribute!Car with same VIN is already exists!']
+    },
     registrationNumber: {
         type: Number,
         required: [true, 'Registration number is required!']
