@@ -36,7 +36,7 @@ class CarsController {
     }
 
     static async putCarsStatus(request, response) {
-        const { date, mileage, status } = request.query;
+        const { date, mileage, status } = request.body;
 
         response.send(await CarsService.putStatus(date, mileage, status));
     }

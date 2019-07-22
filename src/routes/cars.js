@@ -37,13 +37,13 @@ router.post(
 );
 router.put(
   '/status',
-  queryValidator,
+  bodyValidator,
   validator(schemas.putStatus),
   tryCatch(CarsController.putCarsStatus)
 );
 router.put(
   '/location',
-  queryValidator,
+  bodyValidator,
   validator(schemas.location),
   tryCatch(CarsController.putCarsLocation)  
 );
